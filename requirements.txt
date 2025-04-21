@@ -1,4 +1,4 @@
 requests
 llama-index
 llama-index-llms-groq
-dotenv
+python-dotenv
