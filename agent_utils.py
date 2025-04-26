@@ -19,14 +19,6 @@ class WeatherForecast(BaseModel):
     location: str
     temperature: float
     description: str
-    wind_speed: float
-    humidity: float
-    pressure: float
-    visibility: float
-    cloudiness: float
-    sunrise: str
-    sunset: str
-    timezone: str
 
 # Defining the agent
 weather_agent = Agent(
@@ -56,15 +48,7 @@ def get_weather_forecast(ctx: RunContext, city: str) -> WeatherForecast:
     return WeatherForecast(
         location=response['name'],
         temperature=response['main']['temp'],
-        description=response['weather'][0]['description'],
-        wind_speed=response['wind']['speed'],
-        humidity=response['main']['humidity'],
-        pressure=response['main']['pressure'],
-        visibility=response['visibility'],
-        cloudiness=response['clouds']['all'],
-        sunrise=response['sys']['sunrise'],
-        sunset=response['sys']['sunset'],
-        timezone=response['timezone']
+        description=response['weather'][0]['description']
     )
 
 
