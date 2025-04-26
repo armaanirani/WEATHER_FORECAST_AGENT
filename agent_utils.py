@@ -24,7 +24,7 @@ class WeatherForecast(BaseModel):
 weather_agent = Agent(
     model='groq:llama-3.3-70b-versatile',
     model_settings=ModelSettings(
-        temperature=0.2
+        temperature=0.0
     ),
     output_type=WeatherForecast,
     system_prompt="""You are a weather forecast agent. 
@@ -43,12 +43,12 @@ def get_weather_forecast(ctx: RunContext, city: str) -> WeatherForecast:
         "units": 'metric'
     }
     
-    response = requests.get(BASE_URL, params=params).json()
+    response = requests.get(BASE_URL, params=params)
+    response.raise_for_status()  # Raise exception for bad status codes
+    data = response.json()
     
     return WeatherForecast(
-        location=response['name'],
-        temperature=response['main']['temp'],
-        description=response['weather'][0]['description']
+        location=data['name'],
+        temperature=data['main']['temp'],
+        description=data['weather'][0]['description']
     )
-
-
