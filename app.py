@@ -1,6 +1,7 @@
 import streamlit as st
-from agent_utils import weather_agent
+from agent_utils import weather_agent, WeatherForecast
 from datetime import datetime
+import asyncio
 
 st.set_page_config(
     page_title="Weather Forecast Agent",
@@ -10,13 +11,9 @@ st.set_page_config(
 
 st.title("⛅ Weather Forecast Agent")
 
-# Sidebar for additional info
-with st.sidebar:
-    st.header("About")
-    st.markdown("""
-    This weather agent provides current weather conditions 
-    for any location worldwide using OpenWeatherMap API.
-    """)
+async def get_weather(location: str):
+    """Helper function to run the async weather agent"""
+    return await weather_agent.run(location)
 
 location = st.text_input("Enter a city name:", placeholder="e.g. London, New York, Tokyo")
 
@@ -25,7 +22,7 @@ if st.button("Get Weather Forecast"):
         with st.spinner(f"Fetching weather for {location}..."):
             try:
                 # Get the weather forecast
-                response = weather_agent.run(location)
+                response = asyncio.run(get_weather(location))
                 
                 # Display the results in a nice format
                 with st.container():
