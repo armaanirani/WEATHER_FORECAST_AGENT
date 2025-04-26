@@ -1,7 +1,8 @@
 import streamlit as st
-from agent_utils import weather_agent, WeatherForecast
+from agent_utils import weather_agent
 from datetime import datetime
 import asyncio
+import requests
 
 st.set_page_config(
     page_title="Weather Forecast Agent",
@@ -37,14 +38,15 @@ if st.button("Get Weather Forecast"):
                         with col2:
                             st.markdown(f"**Condition:** {response.description.capitalize()}")
                         
+                        st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
                         # Additional weather details could be added here
                 else:
                     st.error("No weather data received")
                         
             except requests.exceptions.RequestException as e:
-                st.error(f"Network error: {str(e)}")
+                st.error(f"Failed to connect to weather service. Please check your internet connection.")
             except KeyError as e:
-                st.error(f"Data format error: {str(e)}")
+                st.error(f"Invalid city name or weather service error. Please try a different location.")
             except Exception as e:
                 st.error(f"Error fetching weather data: {str(e)}")
     else:
