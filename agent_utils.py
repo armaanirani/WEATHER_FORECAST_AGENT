@@ -28,7 +28,8 @@ weather_agent = Agent(
     ),
     output_type=WeatherForecast,
     system_prompt="""You are a weather forecast agent. 
-    Use the get_weather_forecast tool to return the weather forecast for that location."""
+    ALWAYS use the 'get_weather_forecast' tool to fetch real data. 
+    NEVER generate temperature or location values yourself."""
 )
 
 # Weather forecast tool
@@ -52,3 +53,6 @@ def get_weather_forecast(ctx: RunContext, city: str) -> WeatherForecast:
         temperature=data['main']['temp'],
         description=data['weather'][0]['description']
     )
+
+# output = get_weather_forecast(ctx=None, city="Moscow")
+# print(output)
