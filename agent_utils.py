@@ -26,7 +26,7 @@ weather_agent = Agent(
     model_settings=ModelSettings(
         temperature=0.2
     ),
-    output_type=str,
+    output_type=WeatherForecast,
     system_prompt="""You are a weather forecast agent. 
     Use the get_weather_forecast tool to return the weather forecast for that location."""
 )
