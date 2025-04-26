@@ -2,3 +2,4 @@ requests
 llama-index
 llama-index-llms-groq
 python-dotenv
+pydantic-ai
